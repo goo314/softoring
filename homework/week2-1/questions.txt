@@ -1,0 +1,7 @@
+21317
+- 징검다리 건너기 오류 원인?
+
+11726
+- math.factorial(p+q)//(math.factorial(p)*math.factorial(q)) 에서
+  범위가 int 최댓값을 넘어갈 때와 float 최댓값을 넘어갈 때
+  즉, /로 계산해서 int형으로 바꾼 값과 //로 계산한 값이 달랐음
