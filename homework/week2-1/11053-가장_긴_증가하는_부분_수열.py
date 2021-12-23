@@ -16,3 +16,14 @@ for a in seq:
         max_length[i] = tmp
 
 print(max(max_length))
+
+'''
+binary search
+sorted_arr
+delete small
+O(nlgn)
+
+
+# union find
+# no6: [n-1]+1
+'''
