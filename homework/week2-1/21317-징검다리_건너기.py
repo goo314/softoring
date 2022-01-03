@@ -2,37 +2,29 @@ n = int(input())
 energies = [tuple(map(int, input().split())) for _ in range(n-1)]
 k = int(input())
 
-min_energy = list()
-huge_jump = [False for _ in range(n-1)]
-
-# jb:just_before, bo:before_one, bt:before_two
-for i in range(n-1):
-    jb, bo, bt = 9999999, 9999999, 9999999
-    if i == 0:
-        jb = energies[i][0]
-    else:
-        jb = min_energy[i-1]+energies[i][0]
-        if i == 1:
-            bo = energies[i-1][1]
-        else:
-            bo = min_energy[i-2]+energies[i-1][1]
-            if i == 2:
-                bt = k
-            elif not huge_jump[i-3]:
-                bt = min_energy[i-3]+k
-    me = min(jb, bo, bt)
-    min_energy.append(me)
-    if i>1:
-        if me == jb and not huge_jump[i-1]:
-            continue
-        elif me == bo and not huge_jump[i-2]:
-            continue
-        else:
-            huge_jump[i] = True
-print(min_energy[-1])
-
 '''
 not_jump_3[n][0] = [n-1][0], [n-2][0]
 jump_3[n][1] = [n-1][1], [n-2][1], [n-3][0]
 
 '''
+
+without_jump = [0 for _ in range(n)]
+with_jump = [ 0 for _ in range(n)]
+
+for i in range(1, n):
+    if i == 1:
+        without_jump[i] = energies[i-1][0]
+    else:
+        without_jump[i] = min(without_jump[i-1]+energies[i-1][0],
+                              without_jump[i-2]+energies[i-2][1])
+        if i == 2:
+            with_jump[i] = k
+        else:
+            if with_jump[i-2] == 0:
+                with_jump[i] = min(with_jump[i-1], without_jump[i-3]+k)
+            elif with_jump[i-1] == 0:
+                with_jump[i] = min(with_jump[i-2], without_jump[i-3]+k)
+            else:
+                with_jump[i] = min(with_jump[i-1], with_jump[i-2], without_jump[i-3]+k)
+
+print( min(with_jump[-1], without_jump[-1]))
